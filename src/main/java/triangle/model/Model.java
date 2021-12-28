@@ -1,5 +1,7 @@
 package triangle.model;
 
+import triangle.controller.Controller;
+
 public class Model {
 
     private Controller controller;

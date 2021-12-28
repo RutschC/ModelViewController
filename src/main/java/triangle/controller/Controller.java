@@ -1,10 +1,10 @@
 package triangle.controller;
 
 import javafx.beans.value.ChangeListener;
+import triangle.view.View;
 
 
 public class Controller{
-
 
     private View view;
 

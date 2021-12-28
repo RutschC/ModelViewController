@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class View extends Application {
 
-    public View(String[] args){
+    public View(String[] args) {
         launch(args);
     }
 
@@ -32,13 +32,14 @@ public class View extends Application {
         root.setAlignment(Pos.CENTER);
 
         root.add(new Text("a"), 0, 0);
-        root.add(aTextField, 1,0);
+        root.add(aTextField, 1, 0);
         root.add(new Text("b"), 0, 1);
-        root.add(bTextField, 1,1);
+        root.add(bTextField, 1, 1);
         root.add(new Text("c"), 0, 2);
-        root.add(cTextField, 1,2);
+        root.add(cTextField, 1, 2);
 
         Text result = new Text();
 
-        root.add(result, 0,3, 2, 1);
+        root.add(result, 0, 3, 2, 1);
+    }
 }
