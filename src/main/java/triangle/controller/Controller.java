@@ -11,12 +11,14 @@ public class Controller{
     public Controller(View view){
         this.view = view;
 
+        assignChangeListener();
+
 
         assignChangeListener();
     }
 
     public void assignChangeListener() {
-        // Hier ChangeListener zu dem jeweiligen View hinzufügen, sodass die Verarbeitung im Controller stattfindet, jedoch im View ankommt
+        view.addChangeListener(listener);
     }
 
 

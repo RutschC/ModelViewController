@@ -1,6 +1,8 @@
 package triangle.view;
 
+
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -8,8 +10,16 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import triangle.controller.Controller;
+import triangle.model.Model;
 
 public class View extends Application {
+
+
+    private Controller controller;
+    private TextField aTextField;
+    private TextField bTextField;
+    private TextField cTextField;
 
     public View(String[] args) {
         launch(args);
@@ -20,9 +30,10 @@ public class View extends Application {
         primaryStage.setTitle("Dreieck");
 
         // Drei Textfelder erzeugen
-        TextField aTextField = new TextField("1");
-        TextField bTextField = new TextField("2");
-        TextField cTextField = new TextField("3");
+
+        aTextField = new TextField("1");
+        bTextField = new TextField("2");
+        cTextField = new TextField("3");
 
         // Wir verwenden eine GridPane für das Layout und ordnen die Label und Textfelder in diesem Raster an
         GridPane root = new GridPane();
@@ -41,5 +52,19 @@ public class View extends Application {
         Text result = new Text();
 
         root.add(result, 0, 3, 2, 1);
+    }
+
+
+    public void modelChanged(Controller controller){
+        this.controller = controller;
+    }
+
+    public void modelChanged(Model model) {
+    }
+
+    public void addChangeListener(ChangeListener l) {
+        aTextField.textProperty().addListener(l);
+        bTextField.textProperty().addListener(l);
+        cTextField.textProperty().addListener(l);
     }
 }
