@@ -3,8 +3,11 @@ package triangle.view;
 
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -13,27 +16,29 @@ import javafx.stage.Stage;
 import triangle.controller.Controller;
 import triangle.model.Model;
 
-public class View extends Application {
+public class View{
 
 
     private Controller controller;
     private TextField aTextField;
     private TextField bTextField;
     private TextField cTextField;
+    private Label result;
 
-    public View(String[] args) {
-        launch(args);
+    private Parent view;
+
+    public View() {
+        view = createView();
     }
 
-    public void start(Stage primaryStage) {
-        // Titel der Anwendung setzen, der als Überschrift des Hauptfensters angezeigt wird
-        primaryStage.setTitle("Dreieck");
 
-        // Drei Textfelder erzeugen
+    private VBox createView() {
+        VBox vbox = new VBox(15);
+        vbox.setPrefWidth(300);
+        vbox.setPrefHeight(250);
+        vbox.setPadding(new Insets(15));
 
-        aTextField = new TextField("1");
-        bTextField = new TextField("2");
-        cTextField = new TextField("3");
+
 
         // Wir verwenden eine GridPane für das Layout und ordnen die Label und Textfelder in diesem Raster an
         GridPane root = new GridPane();
@@ -42,22 +47,29 @@ public class View extends Application {
         root.setHgap(10);
         root.setAlignment(Pos.CENTER);
 
+        // Drei Textfelder erzeugen
+
+        aTextField = new TextField("1");
+        bTextField = new TextField("2");
+        cTextField = new TextField("3");
+
+        // Label erzeugen
+
+        result = new Label("");
+
         root.add(new Text("a"), 0, 0);
         root.add(aTextField, 1, 0);
         root.add(new Text("b"), 0, 1);
         root.add(bTextField, 1, 1);
         root.add(new Text("c"), 0, 2);
         root.add(cTextField, 1, 2);
-
-        Text result = new Text();
-
         root.add(result, 0, 3, 2, 1);
-    }
+        vbox.getChildren().add(root);
 
 
-    public void modelChanged(Controller controller){
-        this.controller = controller;
+        return vbox;
     }
+
 
     public void modelChanged(Model model) {
     }
@@ -66,5 +78,23 @@ public class View extends Application {
         aTextField.textProperty().addListener(l);
         bTextField.textProperty().addListener(l);
         cTextField.textProperty().addListener(l);
+        l.changed(aTextField.textProperty(), aTextField.getText(), aTextField.getText());
+    }
+
+
+    public TextField getaTextField() {
+        return aTextField;
+    }
+
+    public TextField getbTextField() {
+        return bTextField;
+    }
+
+    public TextField getcTextField() {
+        return cTextField;
+    }
+
+    public Parent getView() {
+        return view;
     }
 }
