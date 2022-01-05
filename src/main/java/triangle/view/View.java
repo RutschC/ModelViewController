@@ -1,20 +1,14 @@
 package triangle.view;
 
 
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import triangle.controller.Controller;
-import triangle.model.Model;
 
 public class View{
 
@@ -71,17 +65,6 @@ public class View{
     }
 
 
-    public void modelChanged(Model model) {
-    }
-
-    public void addChangeListener(ChangeListener l) {
-        aTextField.textProperty().addListener(l);
-        bTextField.textProperty().addListener(l);
-        cTextField.textProperty().addListener(l);
-        l.changed(aTextField.textProperty(), aTextField.getText(), aTextField.getText());
-    }
-
-
     public TextField getaTextField() {
         return aTextField;
     }
@@ -96,5 +79,13 @@ public class View{
 
     public Parent getView() {
         return view;
+    }
+
+    public Label getResult() {
+        return result;
+    }
+
+    public void error() {
+        result.setText("Ungültige Eingabe");
     }
 }

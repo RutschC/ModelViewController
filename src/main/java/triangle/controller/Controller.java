@@ -1,14 +1,16 @@
 package triangle.controller;
 
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import triangle.view.View;
 import triangle.model.Model;
 
 
-public class Controller{
+public class Controller implements ChangeListener {
 
     private View view;
     private Model model;
+    ChangeListener<String> listener;
 
 
     public Controller(View view){
@@ -20,37 +22,29 @@ public class Controller{
 
     public void assignChangeListener() {
 
-        view.getaTextField().textProperty().addListener((observableValue, oldValue, newValue) -> view.getaTextField().textProperty().setValue(newValue));
-        view.getbTextField().textProperty().addListener(new ChangeListener<Number>() {
+        view.getaTextField().textProperty().addListener(listener);
+        view.getbTextField().textProperty().addListener(listener);
+        view.getcTextField().textProperty().addListener(listener);
 
-        });
-
-        // view.addChangeListener(listener);
-        // view.getaTextField().
     }
 
+    @Override
+    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+        try {
+            //Längen des Dreiecks werden im Model gesetzt
+            model.setA(Integer.parseInt(view.getaTextField().getText()));
+            model.setB(Integer.parseInt(view.getbTextField().getText()));
+            model.setC(Integer.parseInt(view.getcTextField().getText()));
 
-    // Keine Ahnung wie man den ChangeListener richtig in MCV umsetzt.
-    // Über ActionListener probieren...
+            //Resultat wird im View gezeigt
+            view.getResult().setText(model.triangleCalc());
 
-    // Dieser ChangeListener wird für alle drei Textfelder verwendet und aufgerufen, wenn sich der Text in den
-    // Textfeldern ändert. Der ChangeListener wird als Lambda-Ausdruck definiert, der implizit konvertiert wird.
-//    ChangeListener<String> listener = (observableValue, oldValue, newValue) -> {
-//        try {
-//            int a = Integer.parseInt(aTextField.getText());
-//            int b = Integer.parseInt(bTextField.getText());
-//            int c = Integer.parseInt(cTextField.getText());
-//            if (a == b && b == c) {
-//                result.setText("gleichseitig");
-//            } else if (a == b || a == c || b == c) {
-//                result.setText("gleichschenklig");
-//            } else {
-//                result.setText("ungleichseitig");
-//            }
-//        } catch (NumberFormatException e) {
-//            result.setText("ungültig");
-//        }
-//    };
+
+
+        } catch (NumberFormatException e) {
+            view.error();
+        }
+    }
 
 
 }

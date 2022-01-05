@@ -1,10 +1,8 @@
 package triangle.model;
 
 import triangle.controller.Controller;
-import triangle.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Model {
 
@@ -13,9 +11,8 @@ public class Model {
     private int a;
     private int b;
     private int c;
-
+    private String result;
     private Controller controller;
-    // private List<View> observers = new ArrayList<View>();
 
 
     public Model(Controller controller){
@@ -25,19 +22,7 @@ public class Model {
         c = 1;
     }
 
-    public void addObserver(View observer) {
-        //observers.add(observer);
-    }
 
-    public void removeObserver(View observer) {
-        //observers.remove(observer);
-    }
-
-//    public void notifyObservers() {
-//        for (View observer: observers){
-//            observer.modelChanged(this);
-//        }
-//    }
 
     public int getA() {
         return a;
@@ -51,25 +36,28 @@ public class Model {
         return c;
     }
 
+    public void setA(int a) {
+        this.a = a;
+    }
 
-    //    public void updateValues(List listener){
-//        notifyObservers();
-//
-//        try {
-//            int a = Integer.parseInt(aTextField.getText());
-//            int b = Integer.parseInt(bTextField.getText());
-//            int c = Integer.parseInt(cTextField.getText());
-//            if (a == b && b == c) {
-//                result.setText("gleichseitig");
-//            } else if (a == b || a == c || b == c) {
-//                result.setText("gleichschenklig");
-//            } else {
-//                result.setText("ungleichseitig");
-//            }
-//        } catch (NumberFormatException e) {
-//            result.setText("ungültig");
-//        }
-//
-//
-//    }
+    public void setB(int b) {
+        this.b = b;
+    }
+
+    public void setC(int c) {
+        this.c = c;
+    }
+
+    public String triangleCalc() {
+        if (a == b && b == c) {
+            result = "gleichseitig";
+        } else if (a == b || a == c || b == c) {
+            result = "gleichschenklig";
+        } else {
+            result = "ungleichseitig";
+        }
+        return result;
+    }
+
 }
+
