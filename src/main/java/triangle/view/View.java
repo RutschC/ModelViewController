@@ -87,5 +87,6 @@ public class View{
 
     public void error() {
         result.setText("Ungültige Eingabe");
+        System.out.print("Ungültige Eingabe");
     }
 }

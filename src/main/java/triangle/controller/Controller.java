@@ -6,11 +6,11 @@ import triangle.view.View;
 import triangle.model.Model;
 
 
-public class Controller implements ChangeListener {
+public class Controller {
 
     private View view;
     private Model model;
-    ChangeListener<String> listener;
+
 
 
     public Controller(View view){
@@ -28,8 +28,7 @@ public class Controller implements ChangeListener {
 
     }
 
-    @Override
-    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+    ChangeListener<String> listener = (ObservableValue, oldValue,newValue) ->{
         try {
             //Längen des Dreiecks werden im Model gesetzt
             model.setA(Integer.parseInt(view.getaTextField().getText()));
@@ -44,7 +43,7 @@ public class Controller implements ChangeListener {
         } catch (NumberFormatException e) {
             view.error();
         }
-    }
+    };
 
 
 }
