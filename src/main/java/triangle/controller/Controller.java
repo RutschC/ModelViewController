@@ -1,7 +1,6 @@
 package triangle.controller;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import triangle.view.View;
 import triangle.model.Model;
 
@@ -15,9 +14,15 @@ public class Controller {
 
     public Controller(View view){
         this.view = view;
-        assignChangeListener();
-
         this.model = new Model(this);
+
+        assignChangeListener();
+        changeListenerInitiliaze();
+
+    }
+
+    private void changeListenerInitiliaze() {
+        view.getResult().setText(model.triangleCalc());
     }
 
     public void assignChangeListener() {
