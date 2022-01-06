@@ -17,11 +17,11 @@ public class Controller {
         this.model = new Model(this);
 
         assignChangeListener();
-        changeListenerInitiliaze();
+        changeListenerInitialize();
 
     }
 
-    private void changeListenerInitiliaze() {
+    private void changeListenerInitialize() {
         view.getResult().setText(model.triangleCalc());
     }
 

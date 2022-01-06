@@ -18,8 +18,8 @@ public class Model {
     public Model(Controller controller){
         this.controller = controller;
         a = 1;
-        b = 1;
-        c = 1;
+        b = 2;
+        c = 3;
     }
 
 
