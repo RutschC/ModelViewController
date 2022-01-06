@@ -10,6 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import triangle.controller.Controller;
 
+import java.util.Scanner;
+
 public class View{
 
 
@@ -18,14 +20,18 @@ public class View{
     private TextField bTextField;
     private TextField cTextField;
     private Label result;
+    private final Scanner scanner;
+    public String cliInput;
 
-    private Parent view;
+    private final Parent view;
 
     public View() {
         view = createView();
+        scanner = new Scanner(System.in);
     }
 
-
+    //Create a VBox with three textfields and one label. Each textfiel represents one side of the triangle.
+    //The label will show the result of the calculation
     private VBox createView() {
         VBox vbox = new VBox(15);
         vbox.setPrefWidth(300);
@@ -60,7 +66,6 @@ public class View{
         root.add(result, 0, 3, 2, 1);
         vbox.getChildren().add(root);
 
-
         return vbox;
     }
 
@@ -88,5 +93,42 @@ public class View{
     public void error() {
         result.setText("Ungültige Eingabe");
         System.out.print("Ungültige Eingabe");
+    }
+    //showResult is called in the controller
+    public void showResult(String result){
+        this.result.setText(result);
+        cliOutput();
+    }
+
+    //Method is responsible for the cli output
+    public void cliOutput(){
+        System.out.println("a = " + aTextField.getText());
+        System.out.println("b = " + bTextField.getText());
+        System.out.println("c = " + cTextField.getText());
+        System.out.println(result.getText() + "\n");
+    }
+
+    public boolean readCli(){
+        try {
+            return scanner.hasNext() && scanner.next().length() >= 5;
+        } catch (NullPointerException e) {
+            return false;
+        }
+
+    }
+
+    public String getCliInput() {
+        cliInput = scanner.nextLine();
+        return cliInput;
+    }
+
+    public void setValues(String[] segments) {
+        if (segments[0].equals("a")) {
+            aTextField.setText(segments[2]);
+        } else if (segments[0].equals("b")) {
+            bTextField.setText(segments[2]);
+        } else {
+            cTextField.setText(segments[2]);
+        }
     }
 }
