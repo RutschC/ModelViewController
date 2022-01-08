@@ -1,45 +1,75 @@
 package triangle.controller;
 
 import javafx.beans.value.ChangeListener;
-import triangle.view.View;
+import triangle.view.CommandLine;
+import triangle.view.GraphicalUserInt;
+import triangle.model.Logic;
 
 
-public class Controller{
+public class Controller {
 
-    private View view;
+    private GraphicalUserInt graphicalUserInt;
+    private Logic logic;
+    private CommandLine commandLine;
 
-    public Controller(View view){
-        this.view = view;
 
+
+
+    public Controller(){
+        logic = new Logic(this);
+        graphicalUserInt = new GraphicalUserInt(logic);
+        commandLine = new CommandLine(logic);
+
+        assignViews();
         assignChangeListener();
+        startCliScanner();
 
-
-        assignChangeListener();
     }
+
+    private void assignViews() {
+        logic.setViews(commandLine, graphicalUserInt);
+    }
+
 
     public void assignChangeListener() {
-        view.addChangeListener(listener);
+
+        graphicalUserInt.getaTextField().textProperty().addListener(listener);
+        graphicalUserInt.getbTextField().textProperty().addListener(listener);
+        graphicalUserInt.getcTextField().textProperty().addListener(listener);
+
+    }
+    public void startCliScanner() {
+        commandLine.getCliInput();
     }
 
 
-    // Dieser ChangeListener wird für alle drei Textfelder verwendet und aufgerufen, wenn sich der Text in den
-    // Textfeldern ändert. Der ChangeListener wird als Lambda-Ausdruck definiert, der implizit konvertiert wird.
-    ChangeListener<String> listener = (observableValue, oldValue, newValue) -> {
+    ChangeListener<String> listener = (ObservableValue, oldValue,newValue) ->{
         try {
-            int a = Integer.parseInt(aTextField.getText());
-            int b = Integer.parseInt(bTextField.getText());
-            int c = Integer.parseInt(cTextField.getText());
-            if (a == b && b == c) {
-                result.setText("gleichseitig");
-            } else if (a == b || a == c || b == c) {
-                result.setText("gleichschenklig");
-            } else {
-                result.setText("ungleichseitig");
+            //Längen des Dreiecks werden im Model gesetzt
+            logic.setA(Integer.parseInt(graphicalUserInt.getaTextField().getText()));
+            logic.setB(Integer.parseInt(graphicalUserInt.getbTextField().getText()));
+            logic.setC(Integer.parseInt(graphicalUserInt.getcTextField().getText()));
+
+            if(!logic.cliInputgiven()) {
+                logic.triangleCalc();
             }
+
         } catch (NumberFormatException e) {
-            result.setText("ungültig");
+            graphicalUserInt.error();
+            CommandLine.error();
         }
     };
 
 
+    public CommandLine getCommandLine() {
+        return commandLine;
+    }
+
+    public GraphicalUserInt getGraphicalUserInt() {
+        return graphicalUserInt;
+    }
+
+    public Logic getTriangle() {
+        return logic;
+    }
 }
