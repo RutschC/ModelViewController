@@ -48,7 +48,7 @@
                     <launcher>example</launcher>
                     <jlinkImageName>example</jlinkImageName>
                     <jlinkZipName>example</jlinkZipName>
-                    <mainClass>example.triangle.Main</mainClass>
+                    <mainClass>triangle.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

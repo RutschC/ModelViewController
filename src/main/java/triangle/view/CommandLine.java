@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class CommandLine {
 
     private Scanner scanner;
-    public String cliInput;
+    private String cliInput;
     private Controller controller;
     private Logic logic;
 
@@ -19,7 +19,7 @@ public class CommandLine {
         scanner = new Scanner(System.in);
     }
 
-    public static void error() {
+    public void error() {
         System.out.println("Ungültige Eingabe");
     }
 

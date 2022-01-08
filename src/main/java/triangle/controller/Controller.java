@@ -31,14 +31,14 @@ public class Controller {
     }
 
 
-    public void assignChangeListener() {
+    private void assignChangeListener() {
 
         graphicalUserInt.getaTextField().textProperty().addListener(listener);
         graphicalUserInt.getbTextField().textProperty().addListener(listener);
         graphicalUserInt.getcTextField().textProperty().addListener(listener);
 
     }
-    public void startCliScanner() {
+    private void startCliScanner() {
         commandLine.getCliInput();
     }
 
@@ -56,20 +56,12 @@ public class Controller {
 
         } catch (NumberFormatException e) {
             graphicalUserInt.error();
-            CommandLine.error();
+            commandLine.error();
         }
     };
-
-
-    public CommandLine getCommandLine() {
-        return commandLine;
-    }
 
     public GraphicalUserInt getGraphicalUserInt() {
         return graphicalUserInt;
     }
 
-    public Logic getTriangle() {
-        return logic;
-    }
 }

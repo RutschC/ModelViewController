@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import triangle.controller.Controller;
 import triangle.model.Logic;
 
 
@@ -92,7 +91,7 @@ public class GraphicalUserInt {
             result.setText("Ungültige Eingabe");
         });
     }
-    //showResult is called in the controller
+    //showResult is called in the model update()
     public void showResult(){
         Platform.runLater(() -> {
             aTextField.setText(String.valueOf(logic.getA()));
@@ -103,20 +102,4 @@ public class GraphicalUserInt {
         });
 
     }
-
-
-
-
-
-
-
-//    public void setValues(String[] segments) {
-//        if (segments[0].equals("a")) {
-//            aTextField.setText(segments[2]);
-//        } else if (segments[0].equals("b")) {
-//            bTextField.setText(segments[2]);
-//        } else {
-//            cTextField.setText(segments[2]);
-//        }
-//    }
 }
