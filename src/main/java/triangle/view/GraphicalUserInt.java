@@ -1,6 +1,7 @@
 package triangle.view;
 
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -9,25 +10,25 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import triangle.controller.Controller;
-
-import java.util.Scanner;
-
-public class View{
+import triangle.model.Logic;
 
 
-    private Controller controller;
+public class GraphicalUserInt {
+
+
+    private Logic logic;
     private TextField aTextField;
     private TextField bTextField;
     private TextField cTextField;
     private Label result;
-    private final Scanner scanner;
-    public String cliInput;
+
 
     private final Parent view;
 
-    public View() {
+    public GraphicalUserInt(Logic logic) {
         view = createView();
-        scanner = new Scanner(System.in);
+        this.logic = logic;
+
     }
 
     //Create a VBox with three textfields and one label. Each textfiel represents one side of the triangle.
@@ -86,49 +87,36 @@ public class View{
         return view;
     }
 
-    public Label getResult() {
-        return result;
-    }
-
     public void error() {
-        result.setText("Ungültige Eingabe");
-        System.out.print("Ungültige Eingabe");
+        Platform.runLater(() -> {
+            result.setText("Ungültige Eingabe");
+        });
     }
     //showResult is called in the controller
-    public void showResult(String result){
-        this.result.setText(result);
-        cliOutput();
-    }
+    public void showResult(){
+        Platform.runLater(() -> {
+            aTextField.setText(String.valueOf(logic.getA()));
+            bTextField.setText(String.valueOf(logic.getB()));
+            cTextField.setText(String.valueOf(logic.getC()));
+            result.setText(logic.getResult());
 
-    //Method is responsible for the cli output
-    public void cliOutput(){
-        System.out.println("a = " + aTextField.getText());
-        System.out.println("b = " + bTextField.getText());
-        System.out.println("c = " + cTextField.getText());
-        System.out.println(result.getText() + "\n");
-    }
-
-    public boolean readCli(){
-        try {
-            return scanner.hasNext() && scanner.next().length() >= 5;
-        } catch (NullPointerException e) {
-            return false;
-        }
+        });
 
     }
 
-    public String getCliInput() {
-        cliInput = scanner.nextLine();
-        return cliInput;
-    }
 
-    public void setValues(String[] segments) {
-        if (segments[0].equals("a")) {
-            aTextField.setText(segments[2]);
-        } else if (segments[0].equals("b")) {
-            bTextField.setText(segments[2]);
-        } else {
-            cTextField.setText(segments[2]);
-        }
-    }
+
+
+
+
+
+//    public void setValues(String[] segments) {
+//        if (segments[0].equals("a")) {
+//            aTextField.setText(segments[2]);
+//        } else if (segments[0].equals("b")) {
+//            bTextField.setText(segments[2]);
+//        } else {
+//            cTextField.setText(segments[2]);
+//        }
+//    }
 }

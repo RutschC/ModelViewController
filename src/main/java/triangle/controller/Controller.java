@@ -1,68 +1,75 @@
 package triangle.controller;
 
 import javafx.beans.value.ChangeListener;
-import triangle.model.CliInterpreter;
-import triangle.view.View;
-import triangle.model.Model;
+import triangle.view.CommandLine;
+import triangle.view.GraphicalUserInt;
+import triangle.model.Logic;
 
 
 public class Controller {
 
-    private boolean started = true;
-    private View view;
-    private Model model;
-    private CliInterpreter cliInterpreter;
+    private GraphicalUserInt graphicalUserInt;
+    private Logic logic;
+    private CommandLine commandLine;
 
 
 
-    public Controller(View view){
-        this.view = view;
-        this.model = new Model(this);
-        this.cliInterpreter = new CliInterpreter();
 
+    public Controller(){
+        logic = new Logic(this);
+        graphicalUserInt = new GraphicalUserInt(logic);
+        commandLine = new CommandLine(logic);
+
+        assignViews();
         assignChangeListener();
-        changeListenerInitialize();
         startCliScanner();
 
     }
 
-    private void changeListenerInitialize() {
-        view.getResult().setText(model.triangleCalc());
+    private void assignViews() {
+        logic.setViews(commandLine, graphicalUserInt);
     }
+
 
     public void assignChangeListener() {
 
-        view.getaTextField().textProperty().addListener(listener);
-        view.getbTextField().textProperty().addListener(listener);
-        view.getcTextField().textProperty().addListener(listener);
+        graphicalUserInt.getaTextField().textProperty().addListener(listener);
+        graphicalUserInt.getbTextField().textProperty().addListener(listener);
+        graphicalUserInt.getcTextField().textProperty().addListener(listener);
 
     }
     public void startCliScanner() {
-        try {
-            cliInterpreter.interpretCLI(view.getCliInput());
-        } catch (Exception e) {
-            System.out.println("Keine Konsoleneingabe festgestellt");
-        }
+        commandLine.getCliInput();
     }
 
 
     ChangeListener<String> listener = (ObservableValue, oldValue,newValue) ->{
         try {
-
-
             //Längen des Dreiecks werden im Model gesetzt
-            model.setA(Integer.parseInt(view.getaTextField().getText()));
-            model.setB(Integer.parseInt(view.getbTextField().getText()));
-            model.setC(Integer.parseInt(view.getcTextField().getText()));
+            logic.setA(Integer.parseInt(graphicalUserInt.getaTextField().getText()));
+            logic.setB(Integer.parseInt(graphicalUserInt.getbTextField().getText()));
+            logic.setC(Integer.parseInt(graphicalUserInt.getcTextField().getText()));
 
-            //Resultat wird im View gezeigt
-            view.showResult(model.triangleCalc());
-            startCliScanner();
+            if(!logic.cliInputgiven()) {
+                logic.triangleCalc();
+            }
 
         } catch (NumberFormatException e) {
-            view.error();
+            graphicalUserInt.error();
+            CommandLine.error();
         }
     };
 
 
+    public CommandLine getCommandLine() {
+        return commandLine;
+    }
+
+    public GraphicalUserInt getGraphicalUserInt() {
+        return graphicalUserInt;
+    }
+
+    public Logic getTriangle() {
+        return logic;
+    }
 }
